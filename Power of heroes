@@ -1,0 +1,27 @@
+```
+You are given a 0-indexed integer array nums representing the strength of some heroes. The power of a group of heroes is defined as follows:
+Let i0, i1, ... ,ik be the indices of the heroes in a group. Then, the power of this group is max(nums[i0], nums[i1], ... ,nums[ik])2 * min(nums[i0], nums[i1], ... ,nums[ik]).
+Return the sum of the power of all non-empty groups of heroes possible. Since the sum could be very large, return it modulo 109 + 7.
+```
+
+class Solution{
+  public:
+   const int kMod=1e9+7;
+   long long pw(long long a,long p){
+     long long r=1;
+     while(p--){
+       r=(r*a)%kMod;
+     }
+     return r;
+   }
+   int sumOfPower(vactor<int>& nums){
+     sort(nums.begin(),nums.end());
+     long long prev=0,ans=0;
+     for(int num: nums){
+      ans=(ans+(long long)pw(num,3))%kMod;
+      ans=(ans+(long long)pw(num,2))%kMod;
+      prev=(prev*2 + num)%kMod;
+     }
+     return ans;
+  }
+}
